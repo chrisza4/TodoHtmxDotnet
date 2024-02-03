@@ -1,0 +1,37 @@
+@model List<TodoItem>;
+
+<header class="header">
+            <h1>todos</h1>
+            <form method="post" hx-target="#todo-board" hx-post="Home/Todos">
+            <input class="new-todo" placeholder="What needs to be done?" name="title" autofocus="" 
+                 value=""/>
+                </form>
+            
+        </header>
+<main class="main" style="display: block;">
+  <div class="toggle-all-container">
+    <input class="toggle-all" type="checkbox">
+    <label class="toggle-all-label" for="toggle-all">Mark all as complete</label>
+  </div>
+  <ul class="todo-list">
+    @foreach (var item in Model)
+    {
+      <partial name="TodoItem" model="@item" />
+    }
+  </ul>
+  <footer class="footer" style="display: block;">
+    <span class="todo-count"><strong>@Model.Count</strong> items left</span>
+    <ul class="filters">
+      <li>
+        <a href="#/" class="selected">All</a>
+      </li>
+      <li>
+        <a href="#/active">Active</a>
+      </li>
+      <li>
+        <a href="#/completed">Completed</a>
+      </li>
+    </ul>
+    <button class="clear-completed" style="display: none;"></button>
+  </footer>
+</main>

@@ -1,0 +1,8 @@
+@model TodoItem;
+
+<li data-id="@Model.Id" class="">
+  <div class="view">
+    <input class="toggle" type="checkbox"><label>@Model.Title</label>
+    <button class="destroy" hx-vals='{"id": @Model.Id }' hx-delete="Home/Todos" hx-target="#todo-board"></button>
+  </div>
+</li>
