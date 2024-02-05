@@ -5,12 +5,12 @@ using TodoHtmx.Web.Repositories;
 
 namespace TodoHtmx.Web.Controllers;
 
-public class HomeController : Controller
+public class TodoController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
+    private readonly ILogger<TodoController> _logger;
     private readonly TodoRepository todoRepository;
 
-    public HomeController(TodoRepository todoRepository, ILogger<HomeController> logger)
+    public TodoController(TodoRepository todoRepository, ILogger<TodoController> logger)
     {
         _logger = logger;
         this.todoRepository = todoRepository;
@@ -32,17 +32,11 @@ public class HomeController : Controller
     }
 
     [HttpDelete]
-    [Route("Home/Todos")]
-   public IActionResult DeleteTodo(int id) {
+    [Route("Todo/Todos")]
+    public IActionResult DeleteTodo(int id) {
         todoRepository.DeleteTodo(id);
         return PartialView("TodoItems", this.todoRepository.Todos);
     } 
-
-
-    public IActionResult Privacy()
-    {
-        return View();
-    }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
