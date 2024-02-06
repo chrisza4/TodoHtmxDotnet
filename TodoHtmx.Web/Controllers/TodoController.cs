@@ -35,7 +35,7 @@ public class TodoController : Controller
     [Route("Todo/Todos")]
     public IActionResult DeleteTodo(int id) {
         todoRepository.DeleteTodo(id);
-        return PartialView("TodoItems", this.todoRepository.Todos);
+        return PartialView("DeleteTodo", this.todoRepository.Todos);
     } 
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

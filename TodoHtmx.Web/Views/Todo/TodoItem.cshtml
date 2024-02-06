@@ -1,8 +1,8 @@
 @model TodoItem;
 
-<li data-id="@Model.Id" class="">
+<li data-id="@Model.Id" id="todo-item-@Model.Id">
   <div class="view">
     <input class="toggle" type="checkbox"><label>@Model.Title</label>
-    <button class="destroy" hx-vals='{"id": @Model.Id }' hx-delete="/Todo/Todos" hx-target="#todo-board"></button>
+    <button class="destroy" hx-vals='{"id": @Model.Id }' hx-delete="/Todo/Todos" hx-target="#todo-item-@Model.Id" hx-swap="outerHTML"></button>
   </div>
 </li>
