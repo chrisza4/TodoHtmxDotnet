@@ -1,0 +1,4 @@
+fileignoreconfig:
+- filename: TodoHtmx.Web/Views/Todo/Index.cshtml
+  checksum: c4bb0d7b8e53f8b2f5bc6b4eb6e821f4cceeb452c91d313043f57a7ee3d13e6f
+version: "1.0"
