@@ -3,6 +3,9 @@
 <li data-id="@Model.Id" id="todo-item-@Model.Id">
   <div class="view">
     <input class="toggle" type="checkbox"><label>@Model.Title</label>
-    <button class="destroy" hx-vals='{"id": @Model.Id }' hx-get="/Todo/DeleteModal/@Model.Id" hx-target="#modals-here"></button>
+    <button class="destroy" hx-vals='{"id": @Model.Id }' hx-get="/Todo/DeleteModal/@Model.Id" hx-target="#modals-here"
+      hx-cache="true"></button>
+    @* <button class="destroy" hx-vals='{"id": @Model.Id }' hx-delete="/Todo/Todos/@Model.Id" hx-target="#todo-board" />
+    *@
   </div>
 </li>

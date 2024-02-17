@@ -1,14 +1,13 @@
 @model List<TodoItem>;
 
 <header class="header">
-            <h1>todos</h1>
-            <form method="post" hx-target="#todo-board" hx-post="/Todo/Todos">
+  <h1>todos</h1>
+  <form method="post" hx-target="#todo-board" hx-post="/Todo/Todos">
 
-            <input class="new-todo" placeholder="What needs to be done?" name="title" autofocus="" 
-                 value=""/>
-                </form>
-            
-        </header>
+    <input class="new-todo" placeholder="What needs to be done?" name="title" autofocus="" value="" />
+  </form>
+
+</header>
 <main class="main" style="display: block;">
   <div class="toggle-all-container">
     <input class="toggle-all" type="checkbox">

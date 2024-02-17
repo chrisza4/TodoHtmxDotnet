@@ -22,39 +22,45 @@ public class TodoController : Controller
         return View();
     }
 
-    public IActionResult TodoItems() {
+    public IActionResult TodoItems()
+    {
         return PartialView(this.todoRepository.Todos);
     }
 
     [HttpPost]
-    public IActionResult Todos(string title) {
+    public IActionResult Todos(string title)
+    {
         todoRepository.AddTodo(title);
         return PartialView("TodoItems", this.todoRepository.Todos);
     }
 
     [HttpDelete]
     [Route("Todo/Todos/{id}")]
-    public IActionResult DeleteTodo(int id) {
+    public IActionResult DeleteTodo(int id)
+    {
         todoRepository.DeleteTodo(id);
         return PartialView("DeleteTodo", this.todoRepository.Todos);
     }
 
     [HttpGet]
-    public IActionResult DeleteModal(int id) {
-        return PartialView("Modal", new Modal() {
-            Title="Confirm",
-            Content="Are you sure you want to delete?",
-            HtmxRequest=HtmxRequest.hxDelete,
-            HtmxUrl=$"Todo/Todos/{id}",
+    public IActionResult DeleteModal(int id)
+    {
+        return PartialView("Modal", new Modal()
+        {
+            Title = "Confirm",
+            Content = "Are you sure you want to delete?",
+            HtmxRequest = HtmxRequest.hxDelete,
+            HtmxUrl = $"Todo/Todos/{id}",
             // Now the line is not clear between view and controller. Maybe that is fine??????
             // Alternative: Create unreusable Modal. Bad in another way
-            HtmxTarget=$"#todo-item-{id}"
+            HtmxTarget = $"#todo-item-{id}"
         });
     }
 
     [HttpGet]
     [Route("CloseModal")]
-    public IActionResult CloseModal() {
+    public IActionResult CloseModal()
+    {
         return PartialView("ModalClosed");
     }
 
