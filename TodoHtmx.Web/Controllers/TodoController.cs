@@ -34,6 +34,15 @@ public class TodoController : Controller
         return PartialView("TodoItems", this.todoRepository.Todos);
     }
 
+
+    [HttpPatch]
+    [Route("Todo/Todos/{id}/toggle")]
+    public IActionResult ToggleTodo(int id)
+    {
+        todoRepository.ToggleTodo(id);
+        return PartialView("TodoItems", this.todoRepository.Todos);
+    }
+
     [HttpDelete]
     [Route("Todo/Todos/{id}")]
     public IActionResult DeleteTodo(int id)
