@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TodoHtmx.Web.Models;
+using TodoHtmx.Web.ViewModels;
 
 namespace TodoHtmx.Web.Repositories
 {
@@ -40,6 +41,17 @@ namespace TodoHtmx.Web.Repositories
         {
             var toEdit = todos.First(c => c.Id == id);
             toEdit.IsCompleted = !toEdit.IsCompleted;
+        }
+
+        public List<TodoItem> GetTodos(TodoFilterMode filterMode)
+        {
+            switch (filterMode)
+            {
+                case TodoFilterMode.Active: return this.todos.Where(t => !t.IsCompleted).ToList();
+                case TodoFilterMode.Completed: return this.todos.Where(t => t.IsCompleted).ToList();
+                case TodoFilterMode.All:
+                default: return this.todos;
+            }
         }
     }
 }

@@ -7,3 +7,8 @@ public class TodoItem
 
     public bool IsCompleted = false;
 }
+
+public enum TodoFilterMode
+{
+    All, Active, Completed
+}

@@ -22,16 +22,29 @@ public class TodoController : Controller
         return View();
     }
 
+    private IActionResult todoItemsViewWithFilter()
+    {
+        var filterMode = TodoFilterMode.All;
+        switch (Request.Query["filter"])
+        {
+            case "active": filterMode = TodoFilterMode.Active; break;
+            case "completed": filterMode = TodoFilterMode.Completed; break;
+            default: filterMode = TodoFilterMode.All; break;
+        }
+
+        return PartialView("TodoItems", this.todoRepository.GetTodos(filterMode));
+    }
+
     public IActionResult TodoItems()
     {
-        return PartialView(this.todoRepository.Todos);
+        return todoItemsViewWithFilter();
     }
 
     [HttpPost]
     public IActionResult Todos(string title)
     {
         todoRepository.AddTodo(title);
-        return PartialView("TodoItems", this.todoRepository.Todos);
+        return todoItemsViewWithFilter();
     }
 
 
@@ -40,7 +53,7 @@ public class TodoController : Controller
     public IActionResult ToggleTodo(int id)
     {
         todoRepository.ToggleTodo(id);
-        return PartialView("TodoItems", this.todoRepository.Todos);
+        return todoItemsViewWithFilter();
     }
 
     [HttpDelete]
