@@ -22,18 +22,23 @@ public class TodoController : Controller
         return View();
     }
 
-    private IActionResult todoItemsViewWithFilter()
+    private TodoFilterMode getFilterModeFromRequest()
     {
         string? filterModeString = "";
         if (Request.ContentType == "application/x-www-form-urlencoded" || Request.ContentType == "multipart/form-data")
         {
             filterModeString = Request.Form["filter"];
         }
-        else
+        if (String.IsNullOrEmpty(filterModeString))
         {
             filterModeString = Request.Query["filter"];
         }
-        var filterMode = RequestHelper.TodoFilterModeFromQueryString(filterModeString);
+        return RequestHelper.TodoFilterModeFromQueryString(filterModeString);
+    }
+
+    private IActionResult todoItemsViewWithFilter()
+    {
+        var filterMode = getFilterModeFromRequest();
         return PartialView("TodoItems", new TodoItemsViewModel()
         {
             TodoItems = this.todoRepository.GetTodos(filterMode),
@@ -67,7 +72,8 @@ public class TodoController : Controller
     public IActionResult DeleteTodo(int id)
     {
         todoRepository.DeleteTodo(id);
-        return PartialView("DeleteTodo", this.todoRepository.Todos);
+        var filterMode = getFilterModeFromRequest();
+        return PartialView("DeleteTodo", this.todoRepository.GetTodos(filterMode));
     }
 
     [HttpGet]
@@ -78,7 +84,7 @@ public class TodoController : Controller
             Title = "Confirm",
             Content = "Are you sure you want to delete?",
             HtmxRequest = HtmxRequest.hxDelete,
-            HtmxUrl = $"Todo/Todos/{id}",
+            HtmxUrl = $"Todo/Todos/{id}?filter={Request.Query["filter"]}",
             // Now the line is not clear between view and controller. Maybe that is fine??????
             // Alternative: Create unreusable Modal. Bad in another way
             HtmxTarget = $"#todo-item-{id}"

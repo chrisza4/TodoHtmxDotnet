@@ -2,9 +2,9 @@ using TodoHtmx.Web.Models;
 
 namespace TodoHtmx.Web.ViewModels
 {
-    public class TodoItemViewModel
+    public class TodoItemsViewModel
     {
-        public TodoItem TodoItem { get; set; } = new TodoItem();
+        public List<TodoItem> TodoItems { get; set; } = new List<TodoItem>();
         public TodoFilterMode Filter { get; set; }
     }
 }

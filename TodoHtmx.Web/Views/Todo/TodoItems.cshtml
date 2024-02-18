@@ -18,11 +18,11 @@
   <ul class="todo-list">
     @foreach (var item in Model.TodoItems)
     {
-      <partial name="TodoItem" model="@item" />
+      <partial name="TodoItem" model="@(new TodoItemViewModel() { TodoItem = item, Filter=Model.Filter })" />
     }
   </ul>
   <footer class="footer" style="display: block;">
-    <span class="todo-count"><strong id="todo-count">@Model.TodoItems.Count</strong> items left</span>
+    <span class="todo-count"><strong id="todo-count">@Model.TodoItems.Count</strong> items displayed</span>
     <ul class="filters">
       <li>
         <a href="_blank" hx-get="/Todo/TodoItems" hx-target="#todo-board"
