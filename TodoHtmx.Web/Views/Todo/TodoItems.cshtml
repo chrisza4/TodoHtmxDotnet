@@ -1,13 +1,11 @@
 @using TodoHtmx.Web.Controllers;
-@model List<TodoItem>;
+@using TodoHtmx.Web.ViewModels;
+@model TodoItemsViewModel;
 
-@{
-  var filterMode = RequestHelper.TodoFilterModeFromQueryString(Context.Request.Query["filter"]);
-}
 <header class="header">
   <h1>todos</h1>
   <form method="post" hx-target="#todo-board" hx-post="/Todo/Todos">
-
+    <input type="hidden" name="filter" value="@RequestHelper.TodoFilterModeToQueryString(Model.Filter)" />
     <input class="new-todo" placeholder="What needs to be done?" name="title" autofocus="" value="" />
   </form>
 
@@ -18,25 +16,26 @@
     <label class="toggle-all-label" for="toggle-all">Mark all as complete</label>
   </div>
   <ul class="todo-list">
-    @foreach (var item in Model)
+    @foreach (var item in Model.TodoItems)
     {
       <partial name="TodoItem" model="@item" />
     }
   </ul>
   <footer class="footer" style="display: block;">
-    <span class="todo-count"><strong id="todo-count">@Model.Count</strong> items left</span>
+    <span class="todo-count"><strong id="todo-count">@Model.TodoItems.Count</strong> items left</span>
     <ul class="filters">
       <li>
         <a href="_blank" hx-get="/Todo/TodoItems" hx-target="#todo-board"
-          class="@(filterMode == TodoFilterMode.All ? "checked" : "")" hx-push-url="/Todo">All</a>
+          class="@(Model.Filter == TodoFilterMode.All ? "selected" : "")" hx-push-url="/Todo">All</a>
       </li>
       <li>
         <a href="_blank" hx-get="/Todo/TodoItems?filter=active" hx-target="#todo-board"
-          class="@(filterMode == TodoFilterMode.Active ? "checked" : "")" hx-push-url="/Todo?filter=active">Active</a>
+          class="@(Model.Filter == TodoFilterMode.Active ? "selected" : "")"
+          hx-push-url="/Todo?filter=active">Active</a>
       </li>
       <li>
         <a href="_blank" hx-get="/Todo/TodoItems?filter=completed" hx-target="#todo-board"
-          class="@(filterMode == TodoFilterMode.Completed ? "checked" : "")"
+          class="@(Model.Filter == TodoFilterMode.Completed ? "selected" : "")"
           hx-push-url="/Todo?filter=completed">Completed</a>
       </li>
     </ul>

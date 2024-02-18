@@ -4,8 +4,8 @@
   <div class="view">
     <input class="toggle" type="checkbox" @(Model.IsCompleted ? "checked" : "") hx-patch="/Todo/Todos/@Model.Id/Toggle"
       hx-target="#todo-board"><label>@Model.Title</label>
-    <button class="destroy" hx-vals='{"id": @Model.Id }' hx-get="/Todo/DeleteModal/@Model.Id" hx-target="#modals-here"
-      hx-cache="true"></button>
+    <button class="destroy" hx-vals='{"id": @Model.Id }' hx-get="/Todo/DeleteModal/@Model.Id"
+      hx-target="#modals-here"></button>
     @* <button class="destroy" hx-vals='{"id": @Model.Id }' hx-delete="/Todo/Todos/@Model.Id" hx-target="#todo-board" />
     *@
   </div>

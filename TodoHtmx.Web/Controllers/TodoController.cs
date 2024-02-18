@@ -24,8 +24,21 @@ public class TodoController : Controller
 
     private IActionResult todoItemsViewWithFilter()
     {
-        var filterMode = RequestHelper.TodoFilterModeFromQueryString(Request.Query["filter"]);
-        return PartialView("TodoItems", this.todoRepository.GetTodos(filterMode));
+        string? filterModeString = "";
+        if (Request.ContentType == "application/x-www-form-urlencoded" || Request.ContentType == "multipart/form-data")
+        {
+            filterModeString = Request.Form["filter"];
+        }
+        else
+        {
+            filterModeString = Request.Query["filter"];
+        }
+        var filterMode = RequestHelper.TodoFilterModeFromQueryString(filterModeString);
+        return PartialView("TodoItems", new TodoItemsViewModel()
+        {
+            TodoItems = this.todoRepository.GetTodos(filterMode),
+            Filter = filterMode
+        });
     }
 
     public IActionResult TodoItems()
