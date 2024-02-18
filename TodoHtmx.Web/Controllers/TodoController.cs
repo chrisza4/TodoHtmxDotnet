@@ -24,14 +24,7 @@ public class TodoController : Controller
 
     private IActionResult todoItemsViewWithFilter()
     {
-        var filterMode = TodoFilterMode.All;
-        switch (Request.Query["filter"])
-        {
-            case "active": filterMode = TodoFilterMode.Active; break;
-            case "completed": filterMode = TodoFilterMode.Completed; break;
-            default: filterMode = TodoFilterMode.All; break;
-        }
-
+        var filterMode = RequestHelper.TodoFilterModeFromQueryString(Request.Query["filter"]);
         return PartialView("TodoItems", this.todoRepository.GetTodos(filterMode));
     }
 

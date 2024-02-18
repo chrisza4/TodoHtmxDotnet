@@ -1,5 +1,9 @@
+@using TodoHtmx.Web.Controllers;
 @model List<TodoItem>;
 
+@{
+  var filterMode = RequestHelper.TodoFilterModeFromQueryString(Context.Request.Query["filter"]);
+}
 <header class="header">
   <h1>todos</h1>
   <form method="post" hx-target="#todo-board" hx-post="/Todo/Todos">
@@ -23,13 +27,17 @@
     <span class="todo-count"><strong id="todo-count">@Model.Count</strong> items left</span>
     <ul class="filters">
       <li>
-        <a href="#/" class="selected">All</a>
+        <a href="_blank" hx-get="/Todo/TodoItems" hx-target="#todo-board"
+          class="@(filterMode == TodoFilterMode.All ? "checked" : "")" hx-push-url="/Todo">All</a>
       </li>
       <li>
-        <a href="#/active">Active</a>
+        <a href="_blank" hx-get="/Todo/TodoItems?filter=active" hx-target="#todo-board"
+          class="@(filterMode == TodoFilterMode.Active ? "checked" : "")" hx-push-url="/Todo?filter=active">Active</a>
       </li>
       <li>
-        <a href="#/completed">Completed</a>
+        <a href="_blank" hx-get="/Todo/TodoItems?filter=completed" hx-target="#todo-board"
+          class="@(filterMode == TodoFilterMode.Completed ? "checked" : "")"
+          hx-push-url="/Todo?filter=completed">Completed</a>
       </li>
     </ul>
     <button class="clear-completed" style="display: none;"></button>
